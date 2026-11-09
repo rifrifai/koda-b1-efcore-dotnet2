@@ -20,5 +20,7 @@ public record class UpdateProductRequest(
     int Stock,
 
     [Required, StringLength(30)]
-    string Category
+    string Category,
+
+    string Description
 );

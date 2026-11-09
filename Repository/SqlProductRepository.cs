@@ -112,6 +112,16 @@ public class SqlProductRepository(IConfiguration configuration) : IProductReposi
 		return affectedRows == 1;
 	}
 
+	public Task<IReadOnlyList<Product>> GetAllAsync(bool activeOnly, CancellationToken ck)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Product?> SetActiveAsync(string productCode, bool isActive, CancellationToken ct)
+    {
+        throw new NotImplementedException();
+    }
+
 	// =========== METHOD ==========
 
 	private static Product ReadProduct(SqlDataReader reader)
@@ -121,7 +131,8 @@ public class SqlProductRepository(IConfiguration configuration) : IProductReposi
 			reader.GetString(1),
 			reader.GetDecimal(2),
 			reader.GetInt32(3),
-			reader.GetString(4)
+			reader.GetString(4),
+			reader.GetString(5)
 		);
 	}
 	private static void AddProductCode(SqlCommand command, string productCode)
@@ -140,4 +151,6 @@ public class SqlProductRepository(IConfiguration configuration) : IProductReposi
 		price.Scale = 2;
 		price.Value = product.Price;
 	}
+
+
 }

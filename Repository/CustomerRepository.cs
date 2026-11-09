@@ -49,7 +49,8 @@ public class CustomerRepository(IConfiguration config) : ICustomerRepository
 					reader.GetString(7),
 					reader.GetDecimal(8),
 					reader.GetInt32(9),
-					reader.GetString(10)
+					reader.GetString(10),
+					reader.GetString(11)
 				);
 				
 				customer.Products.Add(product);
@@ -87,7 +88,8 @@ public class CustomerRepository(IConfiguration config) : ICustomerRepository
 					reader.GetString(7),
 					reader.GetDecimal(8),
 					reader.GetInt32(9),
-					reader.GetString(10)
+					reader.GetString(10),
+					reader.GetString(11)
 				);
 				
 				customer.Products.Add(product);

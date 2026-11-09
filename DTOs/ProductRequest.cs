@@ -22,5 +22,7 @@ public record class ProductRequest(
     int Stock,
 
     [Required, StringLength(30)]
-    string Category
+    string Category,
+
+    string Description
 );

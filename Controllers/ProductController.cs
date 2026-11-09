@@ -18,9 +18,9 @@ namespace API.Controllers
 
 		[HttpGet]
 		[ProducesResponseType(typeof(IReadOnlyList<ProductResponse>), StatusCodes.Status200OK)]
-		public async Task<ActionResult<IReadOnlyList<Product>>> GetAll(CancellationToken ck)
+		public async Task<ActionResult<IReadOnlyList<ProductResponse>>> GetAll([FromQuery] bool activeOnly, CancellationToken ck)
 		{
-			var products = await _service.GetAllAsync(ck);
+			var products = await _service.GetAllAsync(activeOnly, ck);
 			return Ok(products);
 		}
 
@@ -107,6 +107,34 @@ namespace API.Controllers
 					title: "Invalid product data!",
 					detail: e.Message);
 			}
+		}
+
+		[HttpPatch("{productCode}/activate")]
+		[ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<ProductResponse>> Activate([FromRoute] string productCode, CancellationToken ct)
+		{
+			var product = await _service.ActivateAsync(productCode, ct);
+
+			return product is null ? Problem(
+				statusCode: StatusCodes.Status404NotFound,
+				title: "Product not found",
+				detail: $"No product was found for code {productCode}"
+			) : Ok(product);
+		}
+
+		[HttpPatch("{productCode}/deactivate")]
+		[ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<ProductResponse>> Deactivate([FromRoute] string productCode, CancellationToken ct)
+		{
+			var product = await _service.DeactivateAsync(productCode, ct);
+
+			return product is null ? Problem(
+				statusCode: StatusCodes.Status404NotFound,
+				title: "Product not found",
+				detail: $"No product was found for code {productCode}"
+			) : Ok(product);
 		}
 	}
 }

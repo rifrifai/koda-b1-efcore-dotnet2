@@ -1,13 +1,18 @@
-@urlBase = http://localhost:5074/api/v1/product
+@urlProduct = http://localhost:5074/api/v1/product
+@urlCustomer = http://localhost:5074/api/v1/customer
 
-###
-GET {{urlBase}}
 
-###
-GET {{urlBase}}/PR02
+### GetCustomers
+GET {{urlCustomer}}
 
-###
-POST {{urlBase}}
+### GetCustomer
+GET {{urlCustomer}}/1
+
+### Delete Customer
+DELETE  {{urlCustomer}}/1
+
+### PostCustomer
+POST {{urlCustomer}}
 Content-Type: application/json
 
 {
@@ -17,8 +22,30 @@ Content-Type: application/json
     "Address": "jl. acropolis cibubur kab. bogor"
 }
 
-###
-PUT {{urlBase}}/PR13
+### GetProducts
+GET {{urlProduct}}
+
+### GetProductsActive
+GET {{urlProduct}}?activaOnly=true
+
+### GetProduct
+GET {{urlProduct}}/PR02
+
+### PostProduct
+POST {{urlProduct}}
+Content-Type: application/json
+
+{
+    "productCode": "PR04",
+    "name": "Buku",
+    "price": 50000.00,
+    "stock": 100,
+    "category": "Pendidikan",
+    "description": "buku merupakan sebuah alat untuk mengetik dengan teknologi zaman modern"
+}
+
+### Put-Product
+PUT {{urlProduct}}/PR13
 Content-Type: application/json
 
 {
@@ -28,8 +55,14 @@ Content-Type: application/json
     "category": "Elektrik"
 }
 
-###
-DELETE  {{urlBase}}/pr01
+### Delete Product
+DELETE  {{urlProduct}}/pr99
+
+### Nonaktifkan produk
+PATCH {{urlProduct}}/PR01/deactivate
+
+### Aktifkan produk
+PATCH {{urlProduct}}/PR01/activate
 
 ### Upload Gambar
 POST http://localhost:5074/api/v1/product/PR02/image
