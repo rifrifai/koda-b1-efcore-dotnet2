@@ -17,6 +17,8 @@ public record class UpdateProductRequest(
     
     [Required(ErrorMessage = "Stok wajib diisi.")]
     [Range(0, int.MaxValue, ErrorMessage = "Stok tidak boleh bernilai negatif.")]
-    int Stock, 
+    int Stock,
+
+    [Required, StringLength(30)]
     string Category
 );

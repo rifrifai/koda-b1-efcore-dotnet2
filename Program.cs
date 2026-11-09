@@ -1,7 +1,9 @@
+using API.Data;
 using API.Files;
 using API.Middlewares;
 using API.Repository;
 using API.Services;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +29,14 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductImageStorage, LocalProductImageStore>();
+
+var connString = builder.Configuration.GetConnectionString("ecommercedb") ?? throw new InvalidOperationException("ConnectionString : Belum dikonfigurasi");
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(connString);
+});
+// builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ecommercedb")));
+
 
 var app = builder.Build();
 

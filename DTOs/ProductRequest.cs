@@ -21,6 +21,6 @@ public record class ProductRequest(
     [Range(0, int.MaxValue, ErrorMessage = "Stok tidak boleh bernilai negatif.")]
     int Stock,
 
-    [Required, StringLength(120)]
+    [Required, StringLength(30)]
     string Category
 );
